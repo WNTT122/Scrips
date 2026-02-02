@@ -5,7 +5,7 @@
 --]]
 
 -- Load Wlib (replace with your loadstring when hosted)
-local Wlib = loadstring(game:HttpGet("YOUR_URL_HERE"))()
+local Wlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WNTT122/Scrips/refs/heads/main/Wlib.lua"))()
 -- For local testing: local Wlib = require(script.Parent.Wlib)
 
 -- Create Window
