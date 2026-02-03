@@ -504,24 +504,12 @@ function Wlib:CreateWindow(settings)
 		BorderSizePixel = 0
 	})
 	
-	local pageLayout = create("UIPageLayout", {
-		Name = "PageLayout",
-		Parent = contentArea,
-		FillDirection = Enum.FillDirection.Horizontal,
-		SortOrder = Enum.SortOrder.LayoutOrder,
-		EasingStyle = Enum.EasingStyle.Quad,
-		EasingDirection = Enum.EasingDirection.Out,
-		TweenTime = 0.25,
-		Padding = UDim.new(0, 0)
-	})
-	
 	-- Window object
 	local Window = {
 		Name = windowName,
 		Main = main,
 		TabList = tabList,
 		ContentArea = contentArea,
-		PageLayout = pageLayout,
 		ConfigEnabled = configEnabled,
 		ConfigFile = configFile,
 		Tabs = {},
@@ -667,6 +655,7 @@ function Wlib:CreateWindow(settings)
 		
 		-- Tab selection
 		local function selectTab()
+			-- Hide all tabs
 			for _, otherTab in ipairs(self.Tabs) do
 				otherTab.Visible = false
 				otherTab.Page.Visible = false
@@ -674,14 +663,10 @@ function Wlib:CreateWindow(settings)
 				tween(otherTab.Button.Title, {TextColor3 = Theme.TextDark})
 			end
 			
+			-- Show selected tab
 			Tab.Visible = true
+			Tab.Page.Visible = true
 			self.CurrentTab = Tab
-			tabPage.Visible = true
-			
-			-- Safe page transition
-			pcall(function()
-				pageLayout:JumpTo(tabPage)
-			end)
 			
 			tween(tabBtn, {BackgroundTransparency = 0})
 			tween(tabTitle, {TextColor3 = Theme.Accent})
