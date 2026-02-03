@@ -669,14 +669,20 @@ function Wlib:CreateWindow(settings)
 		local function selectTab()
 			for _, otherTab in ipairs(self.Tabs) do
 				otherTab.Visible = false
+				otherTab.Page.Visible = false
 				tween(otherTab.Button, {BackgroundTransparency = 1})
 				tween(otherTab.Button.Title, {TextColor3 = Theme.TextDark})
 			end
 			
 			Tab.Visible = true
 			self.CurrentTab = Tab
-			pageLayout:JumpTo(tabPage)
 			tabPage.Visible = true
+			
+			-- Safe page transition
+			pcall(function()
+				pageLayout:JumpTo(tabPage)
+			end)
+			
 			tween(tabBtn, {BackgroundTransparency = 0})
 			tween(tabTitle, {TextColor3 = Theme.Accent})
 		end
